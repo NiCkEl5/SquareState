@@ -1,10 +1,10 @@
 	pragma solidity ^0.4.24;
 
-	/* 
-		Big Thanks from the Document crew to chuckbergeron for providing 
-		this template and Andrew Parker for creating the tutorial on building 
-		NFT's. Also, thanks to the ethereum team for providing the ERC721 standard. 
-		Code is Law! 
+	/*
+		Big Thanks from the Document crew to chuckbergeron for providing
+		this template and Andrew Parker for creating the tutorial on building
+		NFT's. Also, thanks to the ethereum team for providing the ERC721 standard.
+		Code is Law!
 	*/
 
 	/**
@@ -56,7 +56,7 @@
 		return c;
 	  }
 	}
-	
+
 	/**
 	* @title Helps contracts guard against reentrancy attacks.
 	* @author Remco Bloemen <remco@2π.com>, Eenae <alexey@mixbytes.io>
@@ -84,7 +84,7 @@
 		}
 
 	}
-	
+
 
 	/**
 	 * @title ERC165
@@ -121,7 +121,7 @@
 	   * @notice Handle the receipt of an NFT
 	   * @dev The ERC721 smart contract calls this function on the recipient
 	   * after a `safetransfer`. This function MAY throw to revert and reject the
-	   * transfer. Return of other than the magic value MUST result in the 
+	   * transfer. Return of other than the magic value MUST result in the
 	   * transaction being reverted.
 	   * Note: the contract address is always the message sender.
 	   * @param _operator The address which called `safeTransferFrom` function
@@ -918,7 +918,7 @@
 	  /// The event emitted (useable by web3) when a token is purchased
 	  event createdToken(address indexed owner, uint256 tokenId);
 	  event boughtToken(address indexed owner, uint256 tokenId);
-	  
+
 	  /*** CONSTANTS ***/
 	  uint8 constant PROPERTY_ID_MIN_LENGTH = 1;
 	  uint8 constant PROPERTY_ID_MAX_LENGTH = 64;
@@ -931,11 +931,11 @@
 	  /// @dev If you'd like a different price for each token type, you will
 	  ///   need to use a mapping like: `mapping(uint256 => uint256) tokenTypePrices;`
 	  /// uint256 currentPrice = 0;
-      mapping(uint256 => uint256) tokenPropertyPrices;
+    mapping(uint256 => uint256) tokenPropertyPrices;
 
 	  /// The title of the token
 	  mapping(uint256 => string) tokenPropertyIDs;
-	  
+
 	  /// The description of the token
 	  mapping(uint256 => string) tokenPropertyDetails;
 
@@ -955,7 +955,7 @@
 		bytes memory _propertyIDBytes = bytes(_propertyID);
 		require(_propertyIDBytes.length >= PROPERTY_ID_MIN_LENGTH, "PropertyID is too short");
 		require(_propertyIDBytes.length <= PROPERTY_ID_MAX_LENGTH, "PropertyID is too long");
-		
+
 		bytes memory _detailsBytes = bytes(_details);
 		require(_detailsBytes.length >= PROPERTY_DETAILS_MIN_LENGTH, "Details is too short");
 		require(_detailsBytes.length <= PROPERTY_DETAILS_MAX_LENGTH, "Details is too long");
@@ -966,8 +966,8 @@
 
 		tokenPropertyIDs[index] = _propertyID;
 		tokenPropertyDetails[index] = _details;
-        tokenPropertyPrices[index] = _propertyPrice;
-        
+    tokenPropertyPrices[index] = _propertyPrice;
+
 		emit createdToken(msg.sender, index);
 	  }
 
@@ -977,7 +977,7 @@
 	  function buyToken (
 		uint256 _tokenID
 	  ) external payable {
-        
+
 		require(msg.value >= tokenPropertyPrices[_tokenID], "Amount of Ether sent too small");
 
 	    safeTransferFrom(ownerOf(_tokenID), msg.sender, _tokenID);
@@ -1035,5 +1035,5 @@
 	  /// @notice allows the owner of this contract to destroy the contract
 	   function kill() public {
 		  if(msg.sender == owner) selfdestruct(owner);
-	   }  
+	   }
 	}
